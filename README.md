@@ -23,21 +23,23 @@ Each tool is an independent PyQt5 application with its own README, requirements,
  │                │    │ QuantToolkit (regression) │   │ Spectrum Library     │
  └────────────────┘    └───────────────────────────┘   └──────────────────────┘
 ```
-Hyperspectral Viewer  
+## Hyperspectral Viewer  
 <img width="997" height="602" alt="Image" src="https://github.com/user-attachments/assets/c49933ba-91a1-476f-a725-0516dfda5f33" />
 
 
-SegToolkit 
+##  SegToolkit 
 <img width="1224" height="712" alt="Image" src="https://github.com/user-attachments/assets/4026042c-9d8a-4efb-abb7-2fcd188bb9b0" />
-YOLO Toolkit 
+##  YOLO Toolkit 
 <img width="1224" height="712" alt="Image" src="https://github.com/user-attachments/assets/2cb2e0dd-71b6-464a-a67e-ed98d2b6e17a" />
-QuantToolkit
+##  QuantToolkit
 <img width="1224" height="712" alt="Image" src="https://github.com/user-attachments/assets/19f9e9ee-91c2-4ba6-9963-53d38f97a396" />
 
 
-SORS Monte Carlo  
+## SORS Monte Carlo  
 <img width="1152" height="777" alt="Image" src="https://github.com/user-attachments/assets/dcb9add9-d650-41ab-9271-671d5483be05" />
-Spectrum Library   
+
+
+## Spectrum Library   
 <img width="805" height="536" alt="Image" src="https://github.com/user-attachments/assets/4085e5e1-3024-4198-beca-836d4cfb11a9" />
 
 ---
