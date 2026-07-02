@@ -1,0 +1,14 @@
+# Core dependencies
+PyQt5>=5.15
+numpy>=1.20
+matplotlib>=3.5
+scipy>=1.7
+
+# Monte Carlo backend
+# PMCX (MCX): GPU-accelerated, requires NVIDIA CUDA toolkit
+# Reference: Fang & Boas, Opt. Express 17, 20178 (2009)
+# Install if NVIDIA GPU available:
+pmcx>=0.7
+
+# If PMCX not available (no NVIDIA GPU), the app automatically
+# falls back to the native NumPy backend (slower but works on any CPU)
