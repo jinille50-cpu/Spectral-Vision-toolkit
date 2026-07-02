@@ -48,7 +48,7 @@ Each tool is an independent PyQt5 application with its own README, requirements,
 
 | Tool | Purpose | Key methods |
 |------|---------|-------------|
-| **[Hyperspectral Viewer](./Hyperspectral-Viewer)** | Explore and inspect hyperspectral / multispectral cubes (band navigation, per-pixel spectra) | Multi-format cube I/O |
+| **[Hyperspectral Viewer](./Hyperspectral_Viewer)** | Explore and inspect hyperspectral / multispectral cubes (band navigation, per-pixel spectra) | Multi-format cube I/O |
 | **[SegToolkit](./SegToolkit)** | Semantic segmentation training / eval / inference for multi-channel, grayscale, RGB images | UNet, UNet++, SegFormer, DeepLabV3+, Mask2Former |
 | **[YOLO Toolkit](./yolo-toolkit)** | Object detection training + label editor | Ultralytics YOLO |
 | **[QuantToolkit](./QuantToolkit)** | Pixel-wise quantitative regression (e.g. concentration) from multispectral images | Patch-CNN & dense U-Net regression, K-Fold CV |
