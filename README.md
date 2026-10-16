@@ -4,7 +4,7 @@ A collection of self-contained GUI tools covering a full **spectroscopic imaging
 from hyperspectral / multispectral / Raman data viewing and denoising, through deep-learning
 segmentation, detection, and pixel-wise quantification, to photon-transport simulation.
 
-Each tool is an independent PyQt5 application with its own README, requirements, and entry point
+Each tool is an independent PyQt5, Pysied application with its own README, requirements, and entry point
 (`python main.py`). Built to systematize an end-to-end research workflow into reusable tools.
 
 > **Data policy:** This repository contains **source code only**. No experimental, clinical, or
@@ -24,7 +24,7 @@ Each tool is an independent PyQt5 application with its own README, requirements,
  └────────────────┘    └───────────────────────────┘   └──────────────────────┘
 ```
 ## Hyperspectral Viewer  
-<img width="997" height="602" alt="Image" src="https://github.com/user-attachments/assets/c49933ba-91a1-476f-a725-0516dfda5f33" />
+<img width="997" height="602" alt="Image" src="HSI%20Viewr/docs/screenshot.png" />
 
 
 ## SegToolkit 
