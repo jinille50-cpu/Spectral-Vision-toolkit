@@ -23,7 +23,7 @@ Each tool is an independent PyQt5, Pysied application with its own README, requi
  └────────────────┘    └───────────────────────────┘   └──────────────────────┘
 ```
 ## Hyperspectral Viewer  
-<img width="997" height="602" alt="Image" src="HSI%20Viewr/hsi_viewer_docs/screenshot.png" />
+<img width="997" height="602" alt="Image" src="HSI%20Viewr/hsi_viewer/docs/screenshot.png" />
 
 
 ---
