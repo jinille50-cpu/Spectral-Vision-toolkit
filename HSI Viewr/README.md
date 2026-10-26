@@ -4,7 +4,7 @@
 **스펙트럼 기준으로 K개 그룹**으로 묶고, 잘못 묶인 객체는 클릭으로 바로 고칩니다.
 SWIR 플라스틱 분류 연구용으로 만들었지만 (H, W, Band) 형태의 어떤 큐브든 열 수 있습니다.
 
-![preview](HSI_Viewer_preview.png)
+![preview](hsi_viewer/docs/screenshot.png)
 
 > **English summary** — A PySide6 + pyqtgraph viewer for hyperspectral cubes (TIFF / NPY / MAT / HDF5 / ENVI).
 > Click pixels or draw ROIs to plot spectra, pick false-color bands by dragging cursors on the plot,
