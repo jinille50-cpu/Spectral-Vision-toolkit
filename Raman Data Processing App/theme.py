@@ -3,7 +3,7 @@
 
 ACCENT = "#2563EB"        # 주 강조색 (버튼, 포커스)
 ACCENT_HOVER = "#1D4ED8"
-ACCENT_PRESSED = "#1E40AF"
+ACCENT_PRESSED = "#3088B1"
 BG = "#FFFFFF"            # 창 배경
 PANEL = "#FFFFFF"         # 패널/그룹 배경
 BORDER = "#D1D5DB"
@@ -11,7 +11,7 @@ TEXT = "#1F2937"
 TEXT_MUTED = "#6B7280"
 PLOT_RAW = "#1F2937"      # 원시 스펙트럼
 PLOT_BASE = "#DC2626"     # 베이스라인
-PLOT_OUT = ACCENT         # 처리 결과
+PLOT_OUT = "#1F2937"          # 처리 결과
 REGION = (37, 99, 235, 18)  # crop 영역 (RGBA)
 
 FONT_FAMILY = "Segoe UI"

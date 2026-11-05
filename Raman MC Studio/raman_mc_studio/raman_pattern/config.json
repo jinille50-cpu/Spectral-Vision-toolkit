@@ -1,0 +1,98 @@
+{
+  "medium": {
+    "mua": 0.08,
+    "mus": 12.9,
+    "g": 0.915,
+    "n": 1.42,
+    "comment": "논문 계수: 돼지 근육:지방 1:1 평균, 830 nm, mm^-1"
+  },
+  "geometry": {
+    "voxel_mm": 0.1,
+    "x_extent_mm": [
+      -23.35,
+      23.35
+    ],
+    "y_extent_mm": [
+      -13.35,
+      13.35
+    ],
+    "tissue_mm": 20.0,
+    "air_mm": 1.0,
+    "cube_mm": 2.0
+  },
+  "source": {
+    "type": "cone",
+    "na": 0.23,
+    "nphoton": 21000000,
+    "seed": 11
+  },
+  "ccd": {
+    "n_channels": 40,
+    "channel_mm": 0.2,
+    "laser_channel": 1
+  },
+  "case1": {
+    "depths_mm": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "case2": {
+    "laser_beside_mm": [
+      0,
+      2,
+      4,
+      6,
+      8
+    ],
+    "scan_mm": 20.0,
+    "step_mm": 0.3,
+    "contribution_bins_mm": [
+      [
+        0.0,
+        1.0
+      ],
+      [
+        1.0,
+        3.0
+      ],
+      [
+        3.0,
+        5.0
+      ],
+      [
+        5.0,
+        7.0
+      ],
+      [
+        7.0,
+        9.5
+      ]
+    ],
+    "ghost_outside_mm": 1.5
+  },
+  "point_data": {
+    "folder": "../../SORS Manual",
+    "laser_channel": 6,
+    "frames_per_batch": 3,
+    "laser_nm": 830.0,
+    "pet_ref_depth_mm": 1,
+    "tissue_ref_depth_mm": 6,
+    "fit_range_cm1": [
+      600,
+      1800
+    ],
+    "exclude_cm1": [
+      1550,
+      1580
+    ],
+    "asls_lambda": 100000.0,
+    "asls_p": 0.001
+  },
+  "fluence_cache": "results/paper/fluence_paper_cone_20M.npy",
+  "output_dir": "results/app"
+}
