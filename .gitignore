@@ -1,0 +1,34 @@
+# Python 캐시
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 측정 데이터
+Raman MC Studio/SORS Manual/
+Raman Data Processing App/Example/
+Noise 2 Void Model App/Lean.txt
+
+# 학습 모델
+*.pth
+Noise 2 Void Model App/*_config.json
+
+# 연구 결과와 논문용 코드
+Raman MC Studio/raman_mc_studio/raman_pattern/results/
+Raman MC Studio/raman_mc_studio/raman_pattern/point_measurement/
+Raman MC Studio/raman_mc_studio/raman_pattern/run_paper_coeff.py
+Raman MC Studio/raman_mc_studio/raman_pattern/make_report_figs.py
+Raman MC Studio/raman_mc_studio/raman_pattern/make_report_pptx.py
+Raman MC Studio/raman_mc_studio/raman_pattern/make_paper_cases.py
+
+# 합성 데이터로 다시 찍을 때까지 올리지 않는 스크린샷
+SegToolkit/docs/screenshot.png
+QuantToolkit/docs/screenshot.png
+yolo-toolkit/docs/screenshot.png
+Raman Data Processing App/screenshots/processing.png
+Raman Data Processing App/screenshots/batch_save.png
+
+# 앱별 작업 기록
+*/CLAUDE.md
+*/BACKLOG.md
+*/PROGRESS.md
+*/INBOX.md
