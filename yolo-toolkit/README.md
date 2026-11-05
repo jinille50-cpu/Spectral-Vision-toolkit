@@ -3,8 +3,6 @@
 A PyQt5 GUI for the full YOLO object-detection workflow — dataset setup, training, evaluation,
 and batch inference — built on **Ultralytics YOLO**.
 
-![Detection](docs/screenshot.png)
-
 ---
 
 ## Features

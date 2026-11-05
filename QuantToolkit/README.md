@@ -3,7 +3,6 @@
 **Pixel-wise quantitative analysis for multispectral imaging**
 
 Deep learning toolkit for predicting continuous values (e.g., concentration) at the pixel level from multispectral/hyperspectral images.
-![Regression](docs/screenshot.png)
 ## Features
 
 - **Two operation modes**

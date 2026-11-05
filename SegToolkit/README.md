@@ -4,7 +4,6 @@ A PyQt5-based GUI application for semantic segmentation model training, evaluati
 Supports hyperspectral (multi-channel), grayscale, and RGB images.
 
 ---
-![Classification](docs/screenshot.png)
 ## Features
 
 - **Multi-format support**: PNG, JPG, TIFF, MAT, NPY, HDR
