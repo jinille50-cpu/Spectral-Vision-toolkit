@@ -10,6 +10,7 @@ Noise 2 Void Model App/Lean.txt
 
 # 학습 모델
 *.pth
+*.pt
 Noise 2 Void Model App/*_config.json
 
 # 연구 결과와 논문용 코드
