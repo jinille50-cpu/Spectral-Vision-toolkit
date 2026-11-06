@@ -242,16 +242,17 @@ class ClusterSpectrumView(QtWidgets.QWidget):
         self.info.setText("")
 
     def set_result(self, result, colors: list[str], ylabel: str, highlight_piece: int | None = None,
-                   space: str = "raw"):
+                   space: str = "raw", sign: float = 1.0):
         """space: 'raw' = 원 세기, 'snv' = 픽셀별 SNV. 클러스터링에 쓴 정규화 공간이 아니라
-        포인트 스펙트럼과 같은 공간에 그려서 서로 비교할 수 있게 한다."""
-        self._last = (result, colors, ylabel, highlight_piece, space)
+        포인트 스펙트럼과 같은 공간에 그려서 서로 비교할 수 있게 한다.
+        sign: -1이면 부호 반전해서 그린다 (표시만, 클러스터링 결과는 그대로)."""
+        self._last = (result, colors, ylabel, highlight_piece, space, sign)
         self._redraw()
 
     def _redraw(self):
         if self._last is None:
             return
-        result, colors, ylabel, highlight, space = self._last
+        result, colors, ylabel, highlight, space, sign = self._last
         for it in self._items:
             self.pi.removeItem(it)
         self._items.clear()
@@ -260,6 +261,7 @@ class ClusterSpectrumView(QtWidgets.QWidget):
         self.pi.setLabel("left", ylabel, color=theme.MUTED)
         disp = getattr(result, "display", None) or {}
         feats, means, stds = disp.get(space, (result.features, result.means, result.stds))
+        feats, means = sign * feats, sign * means  # 부호 반전 (stds는 그대로)
         x = getattr(self, "_x", None)
         b = means.shape[1]
         if x is None or len(x) != b:

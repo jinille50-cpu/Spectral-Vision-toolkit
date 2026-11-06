@@ -88,6 +88,10 @@ class ViewPanel(Card):
         self.chk_snv.setToolTip("스펙트럼별 표준정규변량 정규화")
         self.chk_snv.toggled.connect(lambda _: self.spectraChanged.emit())
         row.addWidget(self.chk_snv)
+        self.chk_neg = QtWidgets.QCheckBox("부호 반전")
+        self.chk_neg.setToolTip("스펙트럼 그래프와 CSV 값에 × -1 (흡광도/투과도처럼 부호가 반대인 데이터용, 이미지와 클러스터링은 그대로)")
+        self.chk_neg.toggled.connect(lambda _: self.spectraChanged.emit())
+        row.addWidget(self.chk_neg)
         self.add(row)
 
         # 버튼
@@ -144,6 +148,7 @@ class ViewPanel(Card):
             "band": int(self.band.value()),
             "bin": int(self.bin.value()),
             "snv": self.chk_snv.isChecked(),
+            "neg": self.chk_neg.isChecked(),
         }
 
 

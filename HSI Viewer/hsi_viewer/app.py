@@ -533,7 +533,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.remove_entry(i)
                 return
 
-    def _entry_spectrum(self, e: dict, bin_size: int, use_snv: bool):
+    def _entry_spectrum(self, e: dict, bin_size: int, use_snv: bool, neg: bool = False):
         data = self.cube.data
         if e["kind"] == "point":
             spec, _ = binned_spectrum(data, e["x"], e["y"], bin_size)
@@ -541,6 +541,8 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             x0, y0, x1, y1 = e["rect"]
             spec, sd = rect_spectrum(data, x0, y0, x1, y1)
+        if neg:
+            spec = -spec  # 부호 반전 (표준편차 sd는 부호와 무관해서 그대로)
         if use_snv:
             spec, sd = snv(spec), None
         return spec, sd
@@ -555,11 +557,11 @@ class MainWindow(QtWidgets.QMainWindow):
             return
         traces = []
         for e in self.entries:
-            spec, sd = self._entry_spectrum(e, st["bin"], st["snv"])
+            spec, sd = self._entry_spectrum(e, st["bin"], st["snv"], st["neg"])
             label = e["label"] + (f" ({e['x']},{e['y']})" if e["kind"] == "point" else " (ROI 평균)")
             traces.append({"label": label, "color": e["color"], "y": spec, "std": sd, "width": 2})
         self.spectrum.set_spectra(traces)
-        self.spectrum.set_ylabel("SNV" if st["snv"] else "세기 (Intensity)")
+        self.spectrum.set_ylabel(self._ylabel(st))
         self._update_cluster_view()
 
     # ------------------------------------------------------------------ 마우스 이동
@@ -583,6 +585,8 @@ class MainWindow(QtWidgets.QMainWindow):
                 txt += f"   객체 {pid}" + (f" · C{q.cluster}" if q.cluster >= 0 else "") + f" · 점수 {q.score:.2f}"
         self.lbl_cursor.setText(txt)
         spec, _ = binned_spectrum(data, x, y, st["bin"])
+        if st["neg"]:
+            spec = -spec
         self.spectrum.set_hover(snv(spec) if st["snv"] else spec)
 
     # ------------------------------------------------------------------ SAM3
@@ -687,9 +691,15 @@ class MainWindow(QtWidgets.QMainWindow):
         """클러스터 그래프를 포인트 그래프와 같은 공간(세기 / SNV)으로 그린다."""
         if self.clus is None:
             return
-        use_snv = self.view_panel.state()["snv"]
-        self.cluster_view.set_result(self.clus, theme.CLUSTER_COLORS, "SNV" if use_snv else "세기 (Intensity)",
-                                     self.selected_piece or None, space="snv" if use_snv else "raw")
+        st = self.view_panel.state()
+        self.cluster_view.set_result(self.clus, theme.CLUSTER_COLORS, self._ylabel(st),
+                                     self.selected_piece or None, space="snv" if st["snv"] else "raw",
+                                     sign=-1.0 if st["neg"] else 1.0)
+
+    @staticmethod
+    def _ylabel(st: dict) -> str:
+        """그래프 y축 이름. 부호 반전이 켜져 있으면 뒤에 (× -1)을 붙인다."""
+        return ("SNV" if st["snv"] else "세기 (Intensity)") + (" (× -1)" if st["neg"] else "")
 
     def select_piece(self, pid: int):
         if self.seg is None:
@@ -779,14 +789,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.statusBar().showMessage("내보낼 것이 없습니다. 포인트나 ROI를 먼저 추가하세요.", 3000)
             return
         st = self.view_panel.state()
-        name = f"{self.cube.stem}_spectra{'_SNV' if st['snv'] else ''}.csv"
+        name = f"{self.cube.stem}_spectra{'_SNV' if st['snv'] else ''}{'_neg' if st['neg'] else ''}.csv"
         path = self._save_dialog("스펙트럼 저장", name, "CSV (*.csv);;Text (*.txt)")
         if not path:
             return
         x, xlabel = self._axis()
         cols, header = [x], [xlabel]
         for e in self.entries:
-            spec, sd = self._entry_spectrum(e, st["bin"], st["snv"])
+            spec, sd = self._entry_spectrum(e, st["bin"], st["snv"], st["neg"])
             cols.append(spec)
             header.append(e["label"] + ("_mean" if e["kind"] == "roi" else ""))
             if sd is not None:
