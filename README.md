@@ -14,9 +14,11 @@ never leaves the lab.
 
 ---
 
-## Lumen Vision
+## [Lumen Vision](https://github.com/jinille50-cpu/lumen-vision)
 
-<img width="997" alt="Lumen Vision home" src="Lumen%20Vision/docs/home.png" />
+> **Repository:** [jinille50-cpu/lumen-vision](https://github.com/jinille50-cpu/lumen-vision) — source code, setup, and full documentation live there.
+
+<img width="997" alt="Lumen Vision home" src="docs/lumen_home.png" />
 
 One PySide6 app with five tools, opened from a single home screen.
 
@@ -64,7 +66,7 @@ One PySide6 app with five tools, opened from a single home screen.
 
 ## Other tools
 
-Standalone apps, each with its own README and entry point.
+Standalone apps in this repository, each with its own README and entry point.
 
 | Tool | Purpose | Key methods |
 |------|---------|-------------|
