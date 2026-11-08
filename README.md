@@ -1,57 +1,93 @@
 # Spectral Vision Toolkit
 
-A collection of self-contained GUI tools covering a full **spectroscopic imaging research pipeline** —
-from hyperspectral / multispectral / Raman data viewing and denoising, through deep-learning
-segmentation, detection, and pixel-wise quantification, to photon-transport simulation.
+GUI tools for a **vision inspection and spectral imaging research workflow** —
+from labeling and model training to defect detection, plus multi-band image analysis and
+physical simulation.
 
-Each tool is an independent PyQt5, Pysied application with its own README, requirements, and entry point
-(`python main.py`). Built to systematize an end-to-end research workflow into reusable tools.
+The core is **Lumen Vision**, a single desktop app that connects the whole vision workflow:
+**label → train → evaluate → inspect**. Everything runs locally on one PC, so image data
+never leaves the lab.
 
 > **Data policy:** This repository contains **source code only**. No experimental, clinical, or
 > unpublished research data is included. Where needed, small synthetic/placeholder samples are used.
-> Expected input formats are documented per tool (see each tool's README).
----
-
-## Pipeline overview
-
-```
-   Acquire / View        Preprocess  Analyze             Simulate / Reference
- ┌────────────────┐    ┌───────────────────────────┐   ┌──────────────────────┐
- │ Hyperspectral  │ →  │ SegToolkit  (segmentation)│   │ SORS Monte Carlo     │
- │ Viewer         │    │ YOLO Toolkit (detection)  │   │ (photon transport)   │
- │                │    │ QuantToolkit (regression) │   │ Spectrum Library     │
- └────────────────┘    └───────────────────────────┘   └──────────────────────┘
-```
-## Hyperspectral Viewer  
-   <img width="997" height="602" alt="Image" src="HSI%20Viewer/docs/screenshot.png" />
-
+> Expected input formats are documented per tool.
 
 ---
 
-## Tools
+## Lumen Vision
+
+<img width="997" alt="Lumen Vision home" src="Lumen%20Vision/docs/home.png" />
+
+One PySide6 app with five tools, opened from a single home screen.
+
+| # | Tool | What it does | Status |
+|---|------|--------------|--------|
+| 01 | **Labeler** | Box and segmentation labeling, export to YOLO / mask format | In progress |
+| 02 | **Segmentation** | Train, evaluate, and run semantic segmentation (RGB, grayscale, multi-band) | Done |
+| 03 | **YOLO** | Object detection training and inference | In progress |
+| 04 | **PatchCore** | Anomaly detection from normal samples only, with heatmaps | In progress |
+| 05 | **HSI Viewer** | Multi-band cube viewer with SAM 3 segmentation and per-object spectra | Done |
+
+### Workflow
+
+```
+  Label                Train / Evaluate             Inspect
+┌──────────────┐    ┌───────────────────────┐    ┌──────────────────────┐
+│ Labeler      │ →  │ Segmentation          │ →  │ Inference            │
+│ (box / mask) │    │ YOLO                  │    │ PatchCore (anomaly)  │
+└──────────────┘    └───────────────────────┘    └──────────────────────┘
+        ↑                                                  │
+        └──────── model-assisted pre-labeling ─────────────┘
+```
+
+### Highlights
+
+- **One workflow, one app** — labels, checkpoints, and results flow between tools without manual path setup
+  (e.g. finished training opens the evaluation tab with the new checkpoint already loaded).
+- **Multi-band ready** — segmentation models and the viewer accept more than 3 channels;
+  color augmentations are switched off automatically for non-RGB inputs.
+- **Model choice** — UNet / UNet++, DeepLabV3+, SegFormer (B0–B5), Mask2Former, DINOv2/v3 backbones,
+  YOLOv8–YOLO26, PatchCore. Models available in the code appear on the home screen automatically.
+- **Training options** — folder split, ratio split, or K-fold (OOF) validation; Albumentations presets;
+  automatic class detection with suggested class weights.
+- **Researcher conveniences** — recent folders/files and last-used settings are remembered across sessions.
+- **Offline by design** — SAM 3, YOLO, and segmentation models all run on the local GPU.
+
+### Roadmap
+
+- Labeler: batch pre-labeling with SAM 3 text prompts, review screen (accept / fix / delete, low-confidence first)
+- Labeler: pre-labeling with your own trained YOLO / segmentation model
+- Labeler: multi-band cube labeling with band-selectable false color
+- ONNX export for deployment
+
+---
+
+## Other tools
+
+Standalone apps, each with its own README and entry point.
 
 | Tool | Purpose | Key methods |
 |------|---------|-------------|
-| **[Hyperspectral Viewer](./Hyperspectral_Viewer)** | Explore and inspect hyperspectral / multispectral cubes (band navigation, per-pixel spectra) | Multi-format cube I/O |
-| **[SegToolkit](./SegToolkit)** | Semantic segmentation training / eval / inference for multi-channel, grayscale, RGB images | UNet, UNet++, SegFormer, DeepLabV3+, Mask2Former |
-| **[YOLO Toolkit](./yolo-toolkit)** | Object detection training + label editor | Ultralytics YOLO |
-| **[QuantToolkit](./QuantToolkit)** | Pixel-wise quantitative regression (e.g. concentration) from multispectral images | Patch-CNN & dense U-Net regression, K-Fold CV |
+| **[QuantToolkit](./QuantToolkit)** | Pixel-wise quantitative regression (e.g. concentration) from multi-band images | Patch-CNN & dense U-Net regression, K-fold CV |
 | **[Spectrum Library Maker](./spectrum-library-maker)** | Build and manage reference spectral libraries | Spectrum I/O, labeling |
-| **[SORS Monte Carlo Simulator](./sors-monte-carlo)** | Predict photon transport / optical behavior for SORS in layered turbid media | GPU Monte Carlo (PMCX/MCX), NumPy fallback |
+| **[SORS Monte Carlo Simulator](./sors-monte-carlo)** | Photon transport in layered turbid media for spatially offset Raman | GPU Monte Carlo (PMCX/MCX), NumPy fallback |
+| **[Raman Data Processing](./raman-data-processing)** | Batch baseline correction, smoothing, and x-axis calibration | AsLS, Savitzky–Golay |
+| **[Raman Denoising](./raman-denoising)** | Self-supervised denoising of spectral images | Noise2Void, Noise2Fast, Neighbor2Neighbor |
 
-> Adjust the list above to match the tools actually present. Each row links to that tool's folder.
+> Adjust the list and links to match the folders actually in the repository.
 
 ---
 
 ## Input data formats
 
-No data files are shipped. Tools expect the following formats (documented in detail per tool):
+No data files are shipped. Tools expect the following formats:
 
 | Type | Formats | Example shape |
 |------|---------|---------------|
-| Hyperspectral / multispectral cube | `.mat`, `.npy`, `.hdr`, `.tif` | `H × W × Bands` (e.g. `200 × 200 × 1340`) |
+| Multi-band cube | `.mat`, `.npy`, `.hdr`, `.tif` | `H × W × Bands` |
 | RGB / grayscale image | `.png`, `.jpg`, `.tif` | `H × W [× 3]` |
 | Segmentation label | `.png` (single-channel mask) | `H × W`, `0 = background` |
+| Detection label | `.txt` (YOLO format) | one box per line |
 | Regression label | `.png` / `.npy` (per-pixel value) | `H × W` |
 | Spectrum | `.csv` | `wavelength, intensity` columns |
 
@@ -59,18 +95,18 @@ No data files are shipped. Tools expect the following formats (documented in det
 
 ## Tech stack
 
-- **Language:** Python
-- **GUI:** PyQt5
-- **DL:** PyTorch, segmentation-models-pytorch, HuggingFace, Ultralytics YOLO
-- **Scientific:** NumPy, SciPy, scikit-learn, PMCX/MCX (Monte Carlo)
+- **Language:** Python 3.10
+- **GUI:** PySide6 (Lumen Vision), PyQt5 (some standalone tools)
+- **Deep learning:** PyTorch, segmentation-models-pytorch, HuggingFace, Ultralytics YOLO, SAM 3, Anomalib
+- **Scientific:** NumPy, SciPy, scikit-learn, Albumentations, PMCX/MCX
 
 ---
 
 ## About
 
-These tools were developed to support spectroscopic imaging research spanning hyperspectral /
-SWIR imaging, Raman spectroscopy, and materials/tissue analysis. The emphasis is on covering the
-**whole pipeline — acquisition, preprocessing, analysis, and physical simulation** — with minimal,
-direct implementations rather than heavy frameworks.
+Developed to support imaging research across vision inspection, multi-band (SWIR) imaging,
+Raman spectroscopy, and materials/tissue analysis. The goal is to cover the **whole pipeline —
+labeling, training, inspection, and physical simulation** — with direct, readable implementations
+rather than heavy frameworks.
 
-*Comments and variable names in some tools are in Korean (original research code).*
+*Comments and some UI text are in Korean (original research code).*
